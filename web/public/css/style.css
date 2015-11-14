@@ -82,6 +82,13 @@ h5 {
   padding: 20px 10px;
   min-height: 50px;
 }
+.ibox-footer {
+  color: inherit;
+  border-top: 1px solid #e7eaec;
+  font-size: 90%;
+  background: #ffffff;
+  padding: 10px 15px;
+}
 .dropdown-menu {
   border: medium none;
   border-radius: 3px;

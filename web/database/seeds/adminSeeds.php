@@ -18,8 +18,8 @@ class adminSeeds extends Seeder
         ));
 
         \DB::table('users')->insert(array (
-            'name'        => 'zeros',
-            'email'       => 'zeros@gmail.com',
+            'name'        => 'manticora',
+            'email'       => 'manticora@gmail.com',
             'password'    => \Hash::make('123456'),
         ));
     }
