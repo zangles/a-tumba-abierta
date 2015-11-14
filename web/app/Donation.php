@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Donation extends Model
@@ -46,5 +47,30 @@ class Donation extends Model
 
         return $rtrn;
     }
+
+    public static function convertGoldToString($donation)
+    {
+        $rtrn = $donation['gold']." <img src='".asset('/img/g.png')."'> ".$donation['silver']." <img src='".asset('/img/s.png')."'> ".$donation['copper']." <img src='".asset('/img/c.png')."'> ";
+        return $rtrn;
+    }
+
+    public static function getDonacionMensualGeneral($date)
+    {
+        $dt = Carbon::parse($date);
+        $dt2 = Carbon::parse($date);
+        $inicio = $dt->startOfMonth();
+        $fin = $dt2->endOfMonth();
+
+        $players = Player::all();
+        $rtrn = 0;
+        foreach ($players as $p) {
+            $rtrn += (int) $p->donation()->where('created_at','>=',$inicio)->where('created_at','<=',$fin)->sum('donation');
+        }
+
+        $rtrn = Donation::convertToGold($rtrn);
+        return $rtrn;
+    }
+
+
 
 }

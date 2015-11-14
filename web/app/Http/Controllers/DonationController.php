@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class DonationController extends Controller
 {
@@ -47,6 +48,14 @@ class DonationController extends Controller
         $don->save();
 
         return redirect('players');
+    }
+
+    public function user($player_id)
+    {
+        $player = Player::findOrFail($player_id);
+        $result = DB::select('select month(created_at) mes,created_at,sum(donation) donation from donations where player_id = :id group by month(created_at)', ['id' => $player_id]);
+
+        return view('donations.user',compact('player','result'));
     }
 
     /**

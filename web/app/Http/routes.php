@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/home', [
-    'uses' => 'HomeController@index',
-    'as'   => 'home'
-]);
+Route::get('/', function(){
+    return redirect ('auth/login');
+});
+Route::get('/home', function(){
+    return redirect ('players');
+});
 
 Route::get('logout', [
     'uses' => 'Auth\AuthController@getLogout',
@@ -34,5 +36,6 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::resource('players', 'PlayerController');
 Route::get('donation/add/{player}', 'DonationController@add');
 Route::post('donation/save/', 'DonationController@save');
+Route::get('donation/user/{player}', 'DonationController@user');
 
 
