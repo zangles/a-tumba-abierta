@@ -23,9 +23,10 @@
                         <h5>Listado de usaurio</h5></span>
                     </div>
                     <div class="ibox-content">
-                        <table class="table">
+                        <table class="table" id="usuarios">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Cuenta</th>
                                     <th>Anotaciones</th>
                                     <th>Donacion mensual</th>
@@ -36,6 +37,7 @@
                                 @foreach($players as $p)
 
                                     <tr>
+                                        <td style="width:40px">{{ $p->id }}</td>
                                         <td style="width:25%">{{ $p->account }}</td>
                                         <td style="width:0%">{{ $p->comments }}</td>
                                         <td style="width:15%">{!! \App\Donation::convertGoldToString($p->getDonacionMensual( date('Y-m-d', time()) ))  !!}</td>
@@ -52,4 +54,18 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('/js/plugins/dataTables/jquery.dataTables.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#usuarios').DataTable();
+        } );
+    </script>
+@endsection
+
+@section('style')
+    {{--<link rel="stylesheet" href="{{ asset('/css/plugins/dataTables/dataTables.bootstrap.css') }}">--}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
 @endsection

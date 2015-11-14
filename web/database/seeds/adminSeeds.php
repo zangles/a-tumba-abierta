@@ -18,9 +18,9 @@ class adminSeeds extends Seeder
         ));
 
         \DB::table('users')->insert(array (
-            'name'        => 'manticora',
-            'email'       => 'manticora@gmail.com',
-            'password'    => \Hash::make('123456'),
+            'name'        => 'admin',
+            'email'       => 'admin@gmail.com',
+            'password'    => \Hash::make('4dm1n'),
         ));
     }
 }
