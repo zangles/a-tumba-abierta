@@ -71,6 +71,12 @@ class Donation extends Model
         return $rtrn;
     }
 
+    public static function getDonationsGeneral()
+    {
+        $result = \DB::select('select month(created_at) mes,created_at,sum(donation) donation from donations group by month(created_at)');
+        return $result;
+    }
+
 
 
 }

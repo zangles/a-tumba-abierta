@@ -113,4 +113,10 @@ class DonationController extends Controller
     {
         //
     }
+
+    public function recaudacionMensual()
+    {
+        $result = Donation::getDonationsGeneral();
+        return view('donations.recaudacion',compact('result'));
+    }
 }

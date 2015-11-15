@@ -39,6 +39,7 @@ Route::resource('players', 'PlayerController');
 Route::get('donation/add/{player}', 'DonationController@add');
 Route::post('donation/save/', 'DonationController@save');
 Route::get('donation/user/{player}', 'DonationController@user');
+Route::get('donation/recaudacion', 'DonationController@recaudacionMensual');
 
 
 
