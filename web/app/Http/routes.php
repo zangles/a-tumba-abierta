@@ -34,8 +34,10 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 
 Route::get('players/active/{player}', 'PlayerController@active');
+Route::get('gastos/detail/{date}', 'GastosController@detail');
 
 Route::resource('players', 'PlayerController');
+Route::resource('gastos', 'GastosController');
 Route::get('donation/add/{player}', 'DonationController@add');
 Route::post('donation/save/', 'DonationController@save');
 Route::get('donation/user/{player}', 'DonationController@user');
