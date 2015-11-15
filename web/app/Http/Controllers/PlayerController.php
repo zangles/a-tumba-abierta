@@ -48,6 +48,7 @@ class PlayerController extends Controller
         $player = new Player();
         $player->account = $request->input('cuenta');
         $player->comments = $request->input('comentarios');
+        $player->status = Player::ENABLED;
         $player->save();
 
         return redirect('players');
@@ -72,7 +73,8 @@ class PlayerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $player = Player::findOrFail($id);
+        return view('player.edit',compact('player'));
     }
 
     /**
@@ -84,7 +86,11 @@ class PlayerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $player = Player::findOrFail($id);
+        $player->comments = $request->input('comentarios');
+        $player->save();
+
+        return redirect('players');
     }
 
     /**
@@ -95,6 +101,23 @@ class PlayerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $player = Player::findOrFail($id);
+        if( $player->hasDonations() ){
+            $player->status = Player::DISABLED;
+            $player->save();
+        }else{
+            $player->delete();
+        }
+
+        return redirect('players');
+    }
+
+    public function active($id)
+    {
+        $player = Player::findOrFail($id);
+        $player->status = Player::ENABLED;
+        $player->save();
+
+        return redirect('players');
     }
 }

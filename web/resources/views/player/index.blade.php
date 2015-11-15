@@ -35,15 +35,34 @@
                             </thead>
                             <tbody>
                                 @foreach($players as $p)
-
-                                    <tr>
+                                    <tr @if($p->status == \App\Player::DISABLED) class="danger" @endif>
                                         <td style="width:40px">{{ $p->id }}</td>
-                                        <td style="width:25%">{{ $p->account }}</td>
-                                        <td style="width:0%">{{ $p->comments }}</td>
-                                        <td style="width:15%">{!! \App\Donation::convertGoldToString($p->getDonacionMensual( date('Y-m-d', time()) ))  !!}</td>
-                                        <td style="width: 260px">
-                                            <a href="{{ url('/donation/add/'.$p->id) }}" class="btn btn-success">Agregar Oro</a>
+                                        <td style="width:150px">{{ $p->account }}</td>
+                                        <td>
+                                            {!!  nl2br($p->comments)  !!}
+                                            <a href="{{ route('players.edit',$p) }}" class="btn btn-white" style="float: right" title="Editar">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                        </td>
+                                        <td style="width:15%" class="text-right">{!! \App\Donation::convertGoldToString($p->getDonacionMensual( date('Y-m-d', time()) ))  !!}</td>
+                                        <td style="width: 350px" class="text-right">
                                             <a href="{{ url('/donation/user/'.$p->id) }}" class="btn btn-info">Ver donaciones</a>
+                                            @if($p->status == \App\Player::ENABLED)
+                                                <a href="{{ url('/donation/add/'.$p->id) }}" class="btn btn-success">Agregar Oro</a>
+
+                                                <form action="{{ route('players.destroy',$p) }}" method="post" style="display: inline-block" id="deleteform">
+                                                    {{csrf_field()}}
+                                                    {{method_field('DELETE')}}
+
+                                                    @if ($p->hasDonations())
+                                                        <button type="submit" class="btn btn-danger delete">Desactivar</button>
+                                                    @else
+                                                        <button type="submit" href="#" class="btn btn-danger delete">Borrar</button>
+                                                    @endif
+                                                </form>
+                                            @else
+                                                <a href="{{ url('players/active/'.$p->id) }}" class="btn btn-primary">Activar</a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
@@ -61,6 +80,13 @@
     <script>
         $(document).ready(function() {
             $('#usuarios').DataTable();
+
+            $('.delete').click(function(){
+                if(confirm('Esta seguro?')){
+                    ("#deleteform").submit();
+                }
+                return false;
+            });
         } );
     </script>
 @endsection

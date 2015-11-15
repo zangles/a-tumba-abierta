@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Player extends Model
 {
+    const ENABLED = 1;
+    const DISABLED = 0;
+
     protected $table = 'players';
 
     protected $fillable = ['account', 'comments'];
@@ -26,5 +29,10 @@ class Player extends Model
         $rtrn = $this->donation()->where('created_at','>=',$inicio)->where('created_at','<=',$fin)->sum('donation');
         $rtrn = Donation::convertToGold($rtrn);
         return $rtrn;
+    }
+
+    public function hasDonations()
+    {
+        return ($this->donation()->count() > 0);
     }
 }
