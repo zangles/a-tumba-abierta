@@ -14,6 +14,18 @@ class Player extends Model
 
     protected $fillable = ['account', 'comments'];
 
+    public static function filterAndPaginate($account="")
+    {
+        $users = Player::query();
+        if(!is_null($account)){
+            $users = $users->where('account',$account);
+        }
+        $users = $users->orderBy('id', 'ASC')
+            ->paginate(10);
+
+        return $users;
+    }
+
     public function donation()
     {
         return $this->hasMany('App\Donation');
