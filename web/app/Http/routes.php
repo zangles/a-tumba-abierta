@@ -10,6 +10,20 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+use App\testGW2;
+use Illuminate\Http\Request;
+
+
+Route::get('/azs',function(){
+    return view('html.index');
+});
+
+Route::post('/azs',function(Request $request){
+    $a = new testGW2();
+    dd($a->run($request->get('html')));
+
+});
+
 
 Route::get('/', function(){
     return redirect ('auth/login');
@@ -17,6 +31,20 @@ Route::get('/', function(){
 Route::get('/home', function(){
     return redirect ('players');
 });
+Route::get('/test',function(){
+    $service = new PhpGw2Api\Service(__DIR__ . '/cache', 3600);
+    $service->returnAssoc(true);
+    $items = $service->getItems();
+
+    $item = $service->getGuildDetails(array('guild_name' => 'A Tumba Abierta'));
+    var_dump($item);
+});
+
+
+Route::get('/home', [
+    'uses' => 'HomeController@index',
+    'as'   => 'home'
+]);
 
 Route::get('logout', [
     'uses' => 'Auth\AuthController@getLogout',
