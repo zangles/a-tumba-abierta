@@ -23,7 +23,8 @@ class PlayerController extends Controller
      */
     public function index(Request $request)
     {
-        $players = Player::filterAndPaginate($request->get('account'));
+        //$players = Player::filterAndPaginate($request->get('account'));
+        $players = Player::all();
         return view('player.index',compact('players'));
     }
 

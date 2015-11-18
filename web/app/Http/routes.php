@@ -41,11 +41,6 @@ Route::get('/test',function(){
 });
 
 
-Route::get('/home', [
-    'uses' => 'HomeController@index',
-    'as'   => 'home'
-]);
-
 Route::get('logout', [
     'uses' => 'Auth\AuthController@getLogout',
     'as'   => 'logout'

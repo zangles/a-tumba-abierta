@@ -8,6 +8,7 @@ class testGW2 {
     public function run($html)
     {
         $DOM = new DOMDocument;
+        libxml_use_internal_errors(true);
         $DOM->loadHTML($html);
 
         $name = $this->getElementsByClass($DOM,'td','name');
