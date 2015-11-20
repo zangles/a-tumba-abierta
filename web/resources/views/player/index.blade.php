@@ -46,7 +46,7 @@
                                         </a>
                                     </td>
                                     <td style="width:15%" class="text-right">{!! \App\Donation::convertGoldToString($p->getDonacionMensual( date('Y-m-d', time()) ))  !!}</td>
-                                    <td style="width: 150px" class="text-right">
+                                    <td style="width: 100px" class="text-right">
                                         @if($p->status == \App\Player::ENABLED)
                                             <a href="{{ url('/donation/add/'.$p->id) }}" class="btn btn-success" title="Agregar Oro"><img src='{{ asset('/img/g.png') }}'></a>
                                         @endif
@@ -76,9 +76,10 @@
                     null,
                     { "sType": "html" },
                     null,
-                    null,
+                    { "sType": "html" },
                     null
-                ]
+                ],
+                columnDefs: [ { orderable: false, targets: [3,4] }]
             });
 
             $('.delete').click(function(){

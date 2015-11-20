@@ -54,6 +54,19 @@ class Donation extends Model
         return $rtrn;
     }
 
+    public static function getDonacionesAnuales($year)
+    {
+        $donaciones = self::getYearDonation($year);
+        $rtrn = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+        foreach ($donaciones as $d) {
+            $coins = self::convertToGold($d->donation);
+            $rtrn[(int) $d->mes - 1] = $coins['gold'];
+        }
+
+        return $rtrn;
+    }
+
     public static function getDonacionMensualGeneral($date)
     {
         $dt = Carbon::parse($date);
@@ -74,6 +87,16 @@ class Donation extends Model
     public static function getDonationsGeneral()
     {
         $result = \DB::select('select month(created_at) mes,created_at,sum(donation) donation from donations group by month(created_at)');
+        return $result;
+    }
+
+    public static function getYearDonation($year)
+    {
+        $dt = Carbon::createFromDate($year, 1, 1);
+        $dt2 = Carbon::createFromDate($year, 1, 1);
+        $inicio = $dt->startOfYear();
+        $fin = $dt2->endOfYear();
+        $result = \DB::select("select month(created_at) mes,created_at,sum(donation) donation from donations where created_at BETWEEN '".$inicio."' and '".$fin."' group by month(created_at)");
         return $result;
     }
 

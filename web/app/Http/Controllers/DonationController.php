@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Donation;
+use App\Gasto;
 use App\Player;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -117,6 +119,11 @@ class DonationController extends Controller
     public function recaudacionMensual()
     {
         $result = Donation::getDonationsGeneral();
-        return view('donations.recaudacion',compact('result'));
+        $gastos = Gasto::getGastosTotales();
+
+        $dt = Carbon::now();
+        $gastosAnuales = Gasto::getGastosAnuales($dt->year);
+        $ingresosAnuales = Donation::getDonacionesAnuales($dt->year);
+        return view('donations.recaudacion',compact('result','gastos','gastosAnuales','ingresosAnuales'));
     }
 }

@@ -6,7 +6,7 @@
     ?>
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-sm-4">
-            <h2>Donaciones</h2>
+            <h2>Recaudacion</h2>
         </div>
         <div class="col-sm-8">
             <div class="title-action">
@@ -17,44 +17,59 @@
 
     <div class="wrapper wrapper-content">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Recaudaciones Mensuales del clan</h5></span>
-                    </div>
-                    <div class="ibox-content">
-                        @if ($errors->any())
-                            <div class="alert alert-danger" role="alert">
-                                <p>Por favor corrige los errores:</p>
-                                <ul>
-                                    @foreach($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Mes</th>
-                                    <th>Donacion</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($result as $r)
-                                    <tr>
-                                        <?php
-                                            $dt = Carbon::parse($r->created_at);
-                                        ?>
-                                        <td>{{ $dt->month . " - " . $dt->year }}</td>
-                                        <td>{!! \App\Donation::convertGoldToString(\App\Donation::convertToGold($r->donation))  !!}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="col-md-12">
+                @include('donations.partials.graficoRecaudacion')
+            </div>
+            <div class="col-md-6">
+                @include('donations.partials.recaudacionesMensuales')
+            </div>
+            <div class="col-md-6">
+                @include('donations.partials.gastosMensuales')
             </div>
         </div>
     </div>
+@endsection
+
+@section('style')
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('/js/plugins/chartJs/Chart.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+            var data = {
+                labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre","Octubre","Noviembre","Diciembre"],
+                datasets: [
+                    {
+                        label: "Ingresos",
+                        fillColor: "rgba(39, 174, 96,0.2)",
+                        strokeColor: "rgba(39, 174, 96,1)",
+                        pointColor: "rgba(39, 174, 96,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(39, 174, 96,1)",
+                        data: {{json_encode($ingresosAnuales)}}
+                    },
+                    {
+                        label: "Gastos",
+                        fillColor: "rgba(192, 57, 43,0.2)",
+                        strokeColor: "rgba(192, 57, 43,1.0)",
+                        pointColor: "rgba(192, 57, 43,1.0)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(192, 57, 43,1.0)",
+                        data: {{json_encode($gastosAnuales)}}
+                    }
+                ]
+            };
+            var options = {
+                multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>"
+            };
+
+            var ctx = document.getElementById("lineChart").getContext("2d");
+            ctx.canvas.width  = $('.graph01').width();
+            var myLineChart = new Chart(ctx).Line(data,options);
+        });
+    </script>
 @endsection
