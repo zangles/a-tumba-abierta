@@ -31,14 +31,7 @@ Route::get('/', function(){
 Route::get('/home', function(){
     return redirect ('players');
 });
-Route::get('/test',function(){
-    $service = new PhpGw2Api\Service(__DIR__ . '/cache', 3600);
-    $service->returnAssoc(true);
-    $items = $service->getItems();
-
-    $item = $service->getGuildDetails(array('guild_name' => 'A Tumba Abierta'));
-    var_dump($item);
-});
+Route::get('/blacklist','PublicController@blacklist');
 
 
 Route::get('logout', [
@@ -55,6 +48,7 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
+Route::get('players/addblack/', 'PlayerController@addBlackList');
 Route::get('players/black/', 'PlayerController@black');
 Route::get('players/blacklist/{player}', 'PlayerController@blacklist');
 Route::get('players/active/{player}', 'PlayerController@active');

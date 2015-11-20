@@ -37,6 +37,13 @@
                                 <input type="text" class="form-control" name="cuenta" placeholder="Cuenta" value="{{ old('cuenta') }}">
                             </div>
                             <div class="form-group">
+                                <label for="status">Estado</label>
+                                <select name="status" id="status" class="form-control">
+                                    <option @if ( (!is_null(old('status')) and old('status') == \App\Player::ENABLED) or isset($blacklist) ) selected @endif value="{{ \App\Player::ENABLED }}">Habilitado</option>
+                                    <option @if ( (!is_null(old('status')) and old('status') == \App\Player::BLACK_LIST) or isset($blacklist)) selected @endif value="{{ \App\Player::BLACK_LIST }}">En Lista Negra</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputPassword1">Comentarios</label>
                                 <textarea name="comentarios" id="" class="form-control" cols="30" rows="10">{{ old('comentarios') }}</textarea>
                             </div>

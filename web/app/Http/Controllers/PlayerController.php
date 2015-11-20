@@ -55,7 +55,7 @@ class PlayerController extends Controller
         $player = new Player();
         $player->account = $request->input('cuenta');
         $player->comments = $request->input('comentarios');
-        $player->status = Player::ENABLED;
+        $player->status = $request->input('status');
         $player->save();
 
         return redirect('players');
@@ -112,11 +112,11 @@ class PlayerController extends Controller
         if( $player->hasDonations() ){
             $player->status = Player::DISABLED;
             $player->save();
+            return redirect('donation/user/'.$id);
         }else{
             $player->delete();
+            return redirect('players');
         }
-
-        return redirect('donation/user/'.$id);
     }
 
     public function active($id)
@@ -126,6 +126,12 @@ class PlayerController extends Controller
         $player->save();
 
         return redirect('donation/user/'.$id);
+    }
+
+    public function addBlackList()
+    {
+        $blacklist = true;
+        return view('player.create',compact('blacklist'));
     }
 
     public function blacklist($id)

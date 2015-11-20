@@ -8,6 +8,11 @@
         <div class="col-sm-4">
             <h2>BLACK LIST</h2>
         </div>
+        <div class="col-sm-8">
+            <div class="title-action">
+                <a href="{{ url('players/addblack/') }}" class="btn btn-danger">Agregar jugador</a>
+            </div>
+        </div>
     </div>
 
     <div class="wrapper wrapper-content">
