@@ -1,0 +1,39 @@
+<?php
+use Carbon\Carbon;
+?>
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>Gastos Mensuales del clan</h5></span>
+    </div>
+    <div class="ibox-content">
+        @if ($errors->any())
+            <div class="alert alert-danger" role="alert">
+                <p>Por favor corrige los errores:</p>
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Mes</th>
+                <th>Gasto</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($gastos as $r)
+                <tr>
+                    <?php
+                    $dt = Carbon::parse($r->created_at);
+                    ?>
+                    <td>{{ $dt->month . " - " . $dt->year }}</td>
+                    <td>{!! \App\Donation::convertGoldToString(\App\Donation::convertToGold($r->gasto))  !!}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
