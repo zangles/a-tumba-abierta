@@ -9,6 +9,7 @@ class Player extends Model
 {
     const ENABLED = 1;
     const DISABLED = 0;
+    const BLACK_LIST = 3;
 
     protected $table = 'players';
 

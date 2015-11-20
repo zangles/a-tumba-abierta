@@ -24,8 +24,14 @@ class PlayerController extends Controller
     public function index(Request $request)
     {
         //$players = Player::filterAndPaginate($request->get('account'));
-        $players = Player::all();
+        $players = Player::where('status','<>',Player::BLACK_LIST)->get();
         return view('player.index',compact('players'));
+    }
+
+    public function black()
+    {
+        $players = Player::where('status',Player::BLACK_LIST)->get();
+        return view('player.black',compact('players'));
     }
 
     /**
@@ -110,7 +116,7 @@ class PlayerController extends Controller
             $player->delete();
         }
 
-        return redirect('players');
+        return redirect('donation/user/'.$id);
     }
 
     public function active($id)
@@ -119,6 +125,20 @@ class PlayerController extends Controller
         $player->status = Player::ENABLED;
         $player->save();
 
-        return redirect('players');
+        return redirect('donation/user/'.$id);
+    }
+
+    public function blacklist($id)
+    {
+        $player = Player::findOrFail($id);
+        if($player->status == Player::BLACK_LIST){
+            $player->status = Player::ENABLED;
+        }else{
+            $player->status = Player::BLACK_LIST;
+        }
+
+        $player->save();
+
+        return redirect('donation/user/'.$id);
     }
 }

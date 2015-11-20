@@ -55,7 +55,8 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-
+Route::get('players/black/', 'PlayerController@black');
+Route::get('players/blacklist/{player}', 'PlayerController@blacklist');
 Route::get('players/active/{player}', 'PlayerController@active');
 Route::get('gastos/detail/{date}', 'GastosController@detail');
 
@@ -65,6 +66,9 @@ Route::get('donation/add/{player}', 'DonationController@add');
 Route::post('donation/save/', 'DonationController@save');
 Route::get('donation/user/{player}', 'DonationController@user');
 Route::get('donation/recaudacion', 'DonationController@recaudacionMensual');
+
+
+
 
 
 

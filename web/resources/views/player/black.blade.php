@@ -6,13 +6,7 @@
     ?>
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-sm-4">
-            <h2>Jugadores</h2>
-        </div>
-        <div class="col-sm-8">
-            <div class="title-action">
-                <a href="{{ route('players.create') }}" class="btn btn-primary">Agregar jugador</a>
-                <a href="{{ url('players/black/') }}" class="btn btn-success">Ver Black List</a>
-            </div>
+            <h2>BLACK LIST</h2>
         </div>
     </div>
 
@@ -29,7 +23,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Cuenta</th>
-                                <th class="hidden-xs">Anotaciones</th>
+                                <th>Anotaciones</th>
                                 <th>Donacion mensual</th>
                                 <th>Acciones</th>
                             </tr>
@@ -37,9 +31,9 @@
                             <tbody>
                             @foreach($players as $p)
                                 <tr @if($p->status == \App\Player::DISABLED) class="danger" @endif>
-                                    <td style="width:5%">{{ $p->id }}</td>
-                                    <td style="width:15%">{{ $p->account }}</td>
-                                    <td class="hidden-xs">
+                                    <td style="width:40px">{{ $p->id }}</td>
+                                    <td style="width:150px">{{ $p->account }}</td>
+                                    <td>
                                         {!!  nl2br($p->comments)  !!}
                                         <a href="{{ route('players.edit',$p) }}" class="btn btn-white" style="float: right" title="Editar">
                                             <i class="fa fa-pencil"></i>
@@ -67,19 +61,9 @@
 
 @section('scripts')
     <script src="{{ asset('/js/plugins/dataTables/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('/js/plugins/dataTables/dataTables.responsive.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('#usuarios').DataTable({
-                responsive: true,
-                "aoColumns": [
-                    null,
-                    { "sType": "html" },
-                    null,
-                    null,
-                    null
-                ]
-            });
+            $('#usuarios').DataTable();
 
             $('.delete').click(function(){
                 if(confirm('Esta seguro?')){
@@ -92,6 +76,6 @@
 @endsection
 
 @section('style')
+    {{--<link rel="stylesheet" href="{{ asset('/css/plugins/dataTables/dataTables.bootstrap.css') }}">--}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="{{ asset('/css/plugins/dataTables/dataTables.responsive.css') }}">
 @endsection
