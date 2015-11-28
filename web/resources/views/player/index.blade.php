@@ -93,6 +93,7 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
+    {{--<link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">--}}
+    <link rel="stylesheet" href="{{ asset('/css/plugins/dataTables/dataTables.bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/plugins/dataTables/dataTables.responsive.css') }}">
 @endsection

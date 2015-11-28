@@ -24,7 +24,6 @@ Route::post('/azs',function(Request $request){
 
 });
 
-
 Route::get('/', function(){
     return redirect ('auth/login');
 });
@@ -48,6 +47,7 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
+Route::resource('postulate', 'PostulantesController');
 Route::get('players/addblack/', 'PlayerController@addBlackList');
 Route::get('players/black/', 'PlayerController@black');
 Route::get('players/blacklist/{player}', 'PlayerController@blacklist');
