@@ -21,4 +21,9 @@ class Postulantes extends Model
         $result = \DB::select('select * from players where status != '.Player::BLACK_LIST." and UPPER(account) = '".strtoupper($this->account)."'");
         return (count($result)>0 );
     }
+
+    public static function getCantPostulantes()
+    {
+        return Postulantes::all()->count();
+    }
 }
