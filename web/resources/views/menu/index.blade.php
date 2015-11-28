@@ -12,7 +12,12 @@
                 </ul>
             </li>
             <li @if (Request::is('players*')) class="active" @endif >
-                <a href="{{ route('players.index') }}"><i class="fa fa-users"></i> <span class="nav-label">Jugadores</span></a>
+                <a href="#"><i class="fa fa-users"></i> <span class="nav-label">Jugadores</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" style="height: 0px;">
+                    <li @if (Request::is('players')) class="active" @endif ><a href="{{ route('players.index') }}"><i class="fa fa-list"></i> <span class="nav-label">Listado</span></a></li>
+                    <li @if (Request::is('players/black')) class="active" @endif ><a href="{{ url('players/black') }}"><i class="fa fa-user-times"></i> <span class="nav-label">BlackList</span></a></li>
+                    <li @if (Request::is('players/postulantes')) class="active" @endif ><a href="{{ url('players/postulantes') }}"><i class="fa fa-user-plus"></i> <span class="nav-label">Postulantes</span></a></li>
+                </ul>
             </li>
         </ul>
     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\addPlayerRequest;
 use App\Player;
+use App\Postulantes;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -146,5 +147,40 @@ class PlayerController extends Controller
         $player->save();
 
         return redirect('donation/user/'.$id);
+    }
+
+    public function postulantes()
+    {
+        $postulantes = Postulantes::all();
+
+        return view('player.postulantes',compact('postulantes'));
+    }
+
+    public function postulante($id)
+    {
+        $postulante = Postulantes::findOrFail($id);
+        return view('player.postulante',compact('postulante'));
+    }
+
+    public function aceptarPostulante($id)
+    {
+        $postulante = Postulantes::findOrFail($id);
+
+        if($postulante->wasInClan()){
+            $p = Player::where('account',$postulante->account)->get();
+
+            $player = Player::findOrFail($p[0]->id);
+            $player->status = Player::ENABLED;
+            $player->save();
+        }else{
+            $player = new Player();
+            $player->account = $postulante->account;
+            $player->comments = '';
+            $player->status = Player::ENABLED;
+            $player->save();
+        }
+
+        $postulante->delete();
+        return redirect('players/postulantes');
     }
 }

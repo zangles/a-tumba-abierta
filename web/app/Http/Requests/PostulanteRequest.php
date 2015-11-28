@@ -24,8 +24,8 @@ class PostulanteRequest extends Request
     public function rules()
     {
         return [
-            'cuenta' => 'required|unique:postulantes,account',
-            'f2p' => 'required'
+            'cuenta' => 'required|unique:postulantes,account'
+
         ];
     }
 }

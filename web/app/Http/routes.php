@@ -53,6 +53,9 @@ Route::get('players/black/', 'PlayerController@black');
 Route::get('players/blacklist/{player}', 'PlayerController@blacklist');
 Route::get('players/active/{player}', 'PlayerController@active');
 Route::get('gastos/detail/{date}', 'GastosController@detail');
+Route::get('players/postulantes', 'PlayerController@postulantes');
+Route::get('players/postulantes/aceptar/{postulante}', 'PlayerController@aceptarPostulante');
+Route::get('players/postulantes/{postulante}', 'PlayerController@postulante');
 
 Route::resource('players', 'PlayerController');
 Route::resource('gastos', 'GastosController');

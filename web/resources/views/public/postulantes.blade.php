@@ -60,7 +60,7 @@
                         <label for="exampleInputEmail1">Soy Free to Play</label>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="f2p" class="js-switch" id="f2p" @if(!is_null(old('f2p')) and old('f2p') == true) checked @endif />
+                                <input type="checkbox" name="f2p" class="js-switch" value="0" id="f2p" @if(!is_null(old('f2p')) and old('f2p') == true) checked @endif />
                             </label>
                         </div>
                     </div>

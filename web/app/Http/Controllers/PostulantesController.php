@@ -41,7 +41,7 @@ class PostulantesController extends Controller
     {
         $p = new Postulantes();
         $p->account = $request->input('cuenta');
-        $p->f2p = $request->input('f2p');
+        $p->f2p = (is_null($request->input('f2p'))?0:1);
         $p->mensaje = $request->input('mensaje');
         $p->save();
 
@@ -90,6 +90,9 @@ class PostulantesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $postulante = Postulantes::findOrFail($id);
+        $postulante->delete();
+
+        return redirect('players/postulantes/');
     }
 }
